@@ -1,0 +1,108 @@
+main: 
+  time_zone: US/Pacific
+  fitter_name: broadband
+
+paths:
+  exp_folder: /mnt/r/crd_G9000/TDdevelopment/TD_yshi/Fire1017_1023vm1  #Fire1103_1107vm3
+  # exp_folder: /mnt/r/crd_G9000/TDGCdevelopment/Wildfire_UCB2024/SquirtleResults/FireSampling1017_1023
+  combo_logs: Combos
+  TDGC_logs: TDGCLogs
+  zarr_name: NUV1063_combologs.zarr
+  misc_results: Misc_results
+  average_spectra: average
+  correlation_spectra: correlation
+  big_peak_correlation: big_peaks
+  refit: refit_one
+
+times:
+  expt_start: 2024-10-17 08:00:00  # 2024-11-03 03:00:00
+  expt_end: 2024-10-23 10:00:00  # 2024-11-07 17:00:00
+
+misc:
+  chromatogram_plot_pad: 30 # min
+
+chromatogram_params:
+  # adhoc_time_shift_for_td: -8 # hours, winter -8, summer -7
+  chromatogram_duration: 180 # minutes
+  baseline_state: TDStates.TRAPPING
+  baseline_start_trim: 225 # 225 minutes; we're using trim to actually select the END of the chromatogram
+  baseline_end_trim: -180 # -180 minutes; a negative trim means extend AFTER the end of the baseline state
+  max_instrument_data_gap: 30 # seconds
+
+valve_info:
+  latency: 15
+  start_trim: 60
+  end_trim: 15
+  ref_value: 7
+  sample_value: 1
+  min_len: 10
+  ref_min_duration: 500
+  num_reference_periods: 1
+
+fitting:
+  nu_min: 5800
+  nu_max: 6300
+  nominal_pressure: 140
+  use_exact_pressure: False
+  dont_fit: [92831,
+             637513,
+             3611
+             ]
+  always_include: [222]
+  
+  exclude_list: [[6075.5, 6075.7],
+                 [5942.25, 5942.27],
+                 [5943.30, 5943.32],
+                 [5948.86, 5948.88],
+                 [5967.88, 5967.90],
+                 [5979.18, 5979.20],
+                 [5979.22, 5979.26],
+                 [6046.31, 6046.33],
+                 [6073.80, 6073.82],
+                 [6114.33, 6114.35], 
+                 [6047.20, 6047.22],
+                 [6085.47, 6085.49],
+                 [6133.92, 6133.94],
+                 [5985.01, 5985.02],
+                 [5847.07, 5847.09],
+                 [6103.38, 6103.40],
+                 [5949.85, 5949.87],
+                 [6032.54, 6032.56],
+                 [6117.34, 6117.36],
+                 [6038.80, 6038.82],
+                 [5985.01, 5985.03],
+                 [5943.26, 5943.28],
+                 [6025.01, 6025.03],
+                 [5991.81, 5991.83]]
+
+average_spectra:
+  step_width_sec: 30 
+  step_size_sec: 10 
+  na_thresh: 0.9
+  pfi_threshold: 25
+  allow_negatives_in_hunt: True
+
+correlation_spectra:
+  step_width_sec: 30 
+  step_size_sec: 10 
+  na_thresh: 0.9
+  corr_key: partial_fit_integral
+  corr_key_range_threshold: 25
+  hi_pct: 90
+  lo_pct: 10
+  allow_negatives_in_hunt: True
+  
+peak_clustering:
+  max_gap_for_peak_in_steps: 2
+  overall_probability_threshold: 0.85
+  min_num_samples_in_peak: 2
+  prob_to_use: q_prob #bayes_prob or q_prob
+  
+refitting_params:
+  early_time_knee: 350 # seconds
+  pad_for_refitting: 120 # seconds
+  refit_half_width: 5 # seconds
+  
+peak_fitting_params:
+  peak_scaling: 90000 # trap time in seconds * trap_flow / measure flow
+  
