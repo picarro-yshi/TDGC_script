@@ -1,0 +1,8 @@
+__pycache__/
+.idea
+.DS_Store
+temp/
+venv/
+par1/
+model_function_processing
+DataUtilities3
